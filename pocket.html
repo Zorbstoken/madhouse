@@ -48,6 +48,12 @@
 </header>
 <main>
 
+  <section class="card" style="border-color:#1d4fa3">
+    <h2>🎲 The live game runs in Telegram</h2>
+    <p>This page is a <b>demonstration sketch</b> of the game loop — every figure below lives in your browser only. Your real Pocket, real trades, and the clan live in the bot, which is the engine's front door.</p>
+    <p><a href="https://t.me/Zorbianbot?start=poster" style="display:inline-block;background:#1d1a16;color:#faf6ee;padding:.7rem 1.3rem;border-radius:10px;text-decoration:none;font-size:1.05rem">Enter the game through Telegram →</a></p>
+  </section>
+
   <section class="card rules">
     <h2>📜 The rules — read first, all of them, up front</h2>
     <ol>
@@ -95,6 +101,9 @@
       <tr><td>🚒 Red toy fire engine</td><td><b>200</b> Dots</td><td>the one every kid wants</td></tr>
     </table>
     <h3 style="margin:.8rem 0 .4rem">Make a trade</h3>
+    <label>Recipient trade token
+      <input id="tokenIn" maxlength="6" placeholder="6 characters" style="width:8.5rem;text-transform:uppercase" title="The recipient's unique 6-character trade token — trades resolve by token, never by name.">
+    </label><br>
     <label>Item
       <select id="itemSel">
         <option value="10">🍫 Chocolate bar — ref 10</option>
@@ -122,6 +131,12 @@
 <script>
 (function(){
   "use strict";
+  // Back end wiring — see README.md ("Cutover").
+  //   Phase A (default): ENGINE_API_URL = '' → bot-routing mode. The live game runs in
+  //     Telegram (@Zorbianbot); this page is a demonstration sketch. No engine calls.
+  //   Phase B: set ENGINE_API_URL to the public engine base URL (e.g. 'https://engine.example')
+  //     once the engine has a public HTTPS home — the page then talks to the engine directly.
+  var ENGINE_API_URL = '';
   var SUPPLY = 1000000, WELCOME = 100;
   var S = { pool: SUPPLY, pocket: 0, others: 0, donated: 0, welcomed: false };
   function $(id){ return document.getElementById(id); }
@@ -174,17 +189,24 @@
     var ref = parseInt($('itemSel').value,10);
     var ask = parseInt($('askN').value,10);
     var name = $('itemSel').selectedOptions[0].text.split(' — ')[0];
+    // Token-only rule: trades resolve by the recipient's unique 6-character token, never by name.
+    // Alphabet has no 0/O/1/I/L — every character is unambiguous.
+    var tok = ($('tokenIn').value || '').trim().toUpperCase();
+    if (!/^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{6}$/.test(tok)) {
+      $('tradeNote').textContent = 'Trades need the recipient\u2019s 6-character trade token — no names, ever. (Ask them for their token; it\u2019s on their /pocket card.)';
+      return;
+    }
     if (!(ask>=0)) { $('tradeNote').textContent = 'The seller has to ask a real number.'; return; }
     if (ask > S.pocket) { $('tradeNote').textContent = 'Your pocket holds '+fmt(S.pocket)+' — you can\'t spend what you don\'t have. No debt in the Madhouse.'; return; }
     S.pocket -= ask;
     if (ask <= ref){
       S.others += ask;
-      log('Trade: '+name+' for <b>'+fmt(ask)+' Dots</b> (ref '+ref+'). Straight trade — seller keeps it all.');
-      $('tradeNote').textContent = 'Clean trade. '+(ask<ref?'You paid under the reference — generosity, the game\'s favorite move.':'Right on the reference.');
+      log('Trade: '+name+' → token <b>'+tok+'</b> for <b>'+fmt(ask)+' Dots</b> (ref '+ref+'). Straight trade — seller keeps it all.');
+      $('tradeNote').textContent = 'Clean trade to token '+tok+'. '+(ask<ref?'You paid under the reference — generosity, the game\'s favorite move.':'Right on the reference.');
     } else {
       var excess = ask - ref;
       S.others += ref; S.donated += excess;
-      log('Trade: '+name+' — seller asked <b>'+fmt(ask)+'</b> (ref '+ref+'). Seller keeps '+ref+'; <b class="bad" style="color:#c8321e">'+fmt(excess)+' Dots of gouge became The Donation.</b>');
+      log('Trade: '+name+' → token <b>'+tok+'</b> — seller asked <b>'+fmt(ask)+'</b> (ref '+ref+'). Seller keeps '+ref+'; <b class="bad" style="color:#c8321e">'+fmt(excess)+' Dots of gouge became The Donation.</b>');
       $('tradeNote').textContent = 'The gouge ('+fmt(excess)+' Dots) was taken and became The Donation. The seller kept the reference. Everyone saw it happen.';
     }
     render('donN');

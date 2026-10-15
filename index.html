@@ -28,6 +28,11 @@
   #pocketBar .who { font-size:1.05rem; margin-bottom:.3rem; }
   .fine { font-size:.82rem; opacity:.65; text-align:center; max-width:460px; padding:0 1rem 2rem; font-style:italic; }
   a.enter { display:inline-block; margin-top:.5rem; background:var(--ink); color:#fff; padding:.6rem 1.2rem; border-radius:10px; text-decoration:none; }
+  .frontdoor { width:min(430px,94vw); background:#fff8e1; border:3px solid var(--gold); border-radius:14px; margin:1.2rem 0 0; padding:1rem 1.2rem; text-align:center; }
+  .frontdoor p { font-size:.95rem; line-height:1.5; margin:.4rem 0; }
+  a.bigdoor { display:inline-block; margin:.6rem 0 .3rem; background:var(--ink); color:#fff; font-size:1.1rem; padding:.8rem 1.4rem; border-radius:12px; text-decoration:none; border:2px solid var(--gold); }
+  a.bigdoor:hover { background:#3a342c; }
+  .taste { font-size:.82rem; opacity:.65; font-style:italic; text-align:center; max-width:460px; padding:.4rem 1rem 0; }
 </style>
 </head>
 <body>
@@ -35,6 +40,12 @@
   <h1><span class="mad">MADHOUSE</span> — JOIN THE GAME</h1>
   <p>No forms. No email. No "create account." Just play.</p>
 </header>
+
+<div class="frontdoor">
+  <p><b>The live game runs in Telegram.</b> The bot is the engine's front door — your Pocket, trades, quests, wishes, and the clan all live there.</p>
+  <a class="bigdoor" href="https://t.me/Zorbianbot?start=poster">🎲 Enter the game through Telegram →</a>
+  <p class="taste" style="max-width:none;padding:0">Below: a taste of the parlor game, right here in your browser. The real Dots live in the bot.</p>
+</div>
 
 <div id="phone">
   <div id="chat"></div>
@@ -55,8 +66,14 @@
   var choices = document.getElementById('choices');
   var state = { number:null, color:null, name:null, chrono:null, pocket:0, paceMs:null, _t0:0, id:null };
 
-  // Back end: when served over http(s), talk to server.py; otherwise local demo.
-  var API = (location.protocol === 'http:' || location.protocol === 'https:');
+  // Back end wiring — see README.md ("Cutover").
+  //   Phase A (default): ENGINE_API_URL = '' → bot-routing mode. The live game runs in
+  //     Telegram (@Zorbianbot); this page is a front door + parlor demo. No engine calls.
+  //   Phase B: set ENGINE_API_URL to the public engine base URL (e.g. 'https://engine.example')
+  //     once the engine has a public HTTPS home — the page then talks to the engine directly.
+  var ENGINE_API_URL = '';
+  var API = !!ENGINE_API_URL;
+  function api(path){ return ENGINE_API_URL + path; }
 
   var COLORS = { red:['🔴','#d33'], blue:['🔵','#1d4fa3'], green:['🟢','#2a8a2a'], purple:['🟣','#7a3fb0'] };
   var NUM_READ = {
@@ -87,7 +104,7 @@
         showPocket();
       };
       if (API && saved.id){
-        fetch('/api/pocket?id='+encodeURIComponent(saved.id)).then(function(r){ return r.json(); }).then(function(p){
+        fetch(api('/api/pocket?id='+encodeURIComponent(saved.id))).then(function(r){ return r.json(); }).then(function(p){
           if (p && typeof p.pocket === 'number'){
             state.pocket = p.pocket;
             try { localStorage.setItem('madhouse_login', JSON.stringify(state)); } catch(e){}
@@ -194,7 +211,7 @@
           land(100 + giftExtra, giftNote);
         };
         if (API){
-          fetch('/api/join',{method:'POST',headers:{'Content-Type':'application/json'},
+          fetch(api('/api/join'),{method:'POST',headers:{'Content-Type':'application/json'},
             body:JSON.stringify({number:state.number,color:state.color,name:state.name,chrono:state.chrono})})
           .then(function(r){ if(!r.ok) throw new Error('join-failed'); return r.json(); })
           .then(function(j){
@@ -224,7 +241,7 @@
             say('me', esc(v), function(){
               var finish = function(){ say('bot','🗺️ Done — your light is on the map.<br><br>Enter the Madhouse. 👇'); };
               if (API && state.id){
-                fetch('/api/presence',{method:'POST',headers:{'Content-Type':'application/json'},
+                fetch(api('/api/presence'),{method:'POST',headers:{'Content-Type':'application/json'},
                   body:JSON.stringify({id:state.id, region:v})}).then(finish).catch(finish);
               } else finish();
             });
@@ -259,7 +276,7 @@
           done();
         };
         if (API && state.id){
-          fetch('/api/gift',{method:'POST',headers:{'Content-Type':'application/json'},
+          fetch(api('/api/gift'),{method:'POST',headers:{'Content-Type':'application/json'},
             body:JSON.stringify({id:state.id})})
           .then(function(r){ if(!r.ok) throw new Error('gift-failed'); return r.json(); })
           .then(function(j){
