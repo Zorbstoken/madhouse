@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MADHOUSE Pocket — the honest game</title>
+<style>
+  :root { --ink:#1d1a16; --paper:#faf6ee; --red:#c8321e; --gold:#b98a1d; --teal:#0f6f6a; --blue:#1d4fa3; }
+  * { box-sizing:border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; background:var(--paper); color:var(--ink); margin:0; padding:0 0 4rem; }
+  header { background:var(--ink); color:var(--paper); padding:2.2rem 1.2rem 1.6rem; text-align:center; }
+  header h1 { font-size:2.6rem; letter-spacing:.12em; margin:0; }
+  header h1 .mad { color:#ffd23f; }
+  header p.sub { font-style:italic; opacity:.85; margin:.6rem 0 0; }
+  main { max-width:960px; margin:0 auto; padding:0 1rem; }
+  section.card { background:#fff; border:2px solid var(--ink); border-radius:10px; margin:1.2rem 0; padding:1.1rem 1.2rem; box-shadow:4px 4px 0 rgba(29,26,22,.12); }
+  section.card h2 { margin:.1rem 0 .7rem; font-size:1.25rem; letter-spacing:.04em; }
+  .rules ol { margin:.4rem 0 .4rem 1.2rem; padding:0; }
+  .rules li { margin:.45rem 0; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1rem; }
+  .stat { border:2px dashed var(--ink); border-radius:8px; padding:.8rem; text-align:center; background:#fffdf6; }
+  .stat .label { font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; opacity:.7; }
+  .stat .big { font-size:2rem; font-weight:bold; margin:.2rem 0; font-variant-numeric:tabular-nums; }
+  .stat .note { font-size:.82rem; opacity:.75; }
+  .pool .big { color:var(--teal); } .pocket .big { color:var(--blue); }
+  .donation .big { color:var(--red); } .vault .big { color:var(--gold); }
+  button { font-family:inherit; font-size:1rem; background:var(--ink); color:var(--paper); border:2px solid var(--ink); border-radius:8px; padding:.55rem 1rem; cursor:pointer; margin:.25rem .25rem .25rem 0; }
+  button:hover { background:#3a342c; }
+  button:disabled { opacity:.4; cursor:not-allowed; }
+  button.ghost { background:transparent; color:var(--ink); }
+  input[type=number], select { font-family:inherit; font-size:1rem; padding:.5rem; border:2px solid var(--ink); border-radius:8px; margin:.25rem .25rem .25rem 0; }
+  table.price { width:100%; border-collapse:collapse; margin:.5rem 0; }
+  table.price th, table.price td { border-bottom:1px solid #ddd; padding:.5rem .3rem; text-align:left; }
+  table.price th { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; }
+  #ledger { list-style:none; margin:.5rem 0; padding:0; max-height:220px; overflow:auto; font-size:.92rem; }
+  #ledger li { border-bottom:1px dotted #ccc; padding:.3rem 0; }
+  #ledger li .t { opacity:.55; font-size:.8rem; margin-right:.5rem; }
+  .ok { color:var(--teal); font-weight:bold; } .bad { color:var(--red); font-weight:bold; }
+  .fine { font-size:.85rem; opacity:.7; font-style:italic; }
+  .flash { animation:flash 1.2s ease; }
+  @keyframes flash { 0% { background:#ffe9a8; } 100% { background:transparent; } }
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="mad">MADHOUSE</span> POCKET</h1>
+  <p class="sub">Everyone knows it's a game. We say so. — the honest game</p>
+</header>
+<main>
+
+  <section class="card rules">
+    <h2>📜 The rules — read first, all of them, up front</h2>
+    <ol>
+      <li><b>Fixed supply.</b> <span id="ruleSupply">1,000,000</span> Dots exist. No printing. Ever. (Dots are also called <b>Spots</b> — like spots of paint on the canvas.)</li>
+      <li><b>Nothing is created.</b> Every Dot you receive comes from <b>The Pool</b>. When the Pool is empty, no more grants — the game plays on with what's circulating.</li>
+      <li><b>Welcome Dots.</b> Every new arrival gets <b>100 Dots</b> from the Pool. Free. No catch.</li>
+      <li><b>The Price List is the reference.</b> Give the thing away, or ask less — wonderful. Ask the reference — fine. Ask <i>more</i> — you keep the reference; the excess becomes <b>The Donation</b>.</li>
+      <li><b>The Donation</b> flows back into the Pool, funding future Welcome Dots. The gouge feeds the generous.</li>
+      <li><b>Conservation, always:</b> Pool + all Pockets + Donations = fixed supply. Watch it hold, live, below.</li>
+    </ol>
+    <p class="fine">Demonstration figures — adjustable. This page is a working sketch of the game loop, not a live service.</p>
+  </section>
+
+  <section class="card vault">
+    <h2>🖼️ The Vault — the painting</h2>
+    <div class="grid">
+      <div class="stat vault"><div class="label">The artwork</div><div class="big" style="font-size:1.3rem">The system's own painting</div><div class="note">Real canvas. Real custody. In the Vault — not on anyone's wall, not licensed, not an effigy.</div></div>
+      <div class="stat vault"><div class="label">Declared by</div><div class="big" style="font-size:1.3rem">Acme Fake Art Inc.</div><div class="note">Our valuation house. The silliness is the honesty — a valuator called Fake can't fake a valuation.</div></div>
+      <div class="stat vault"><div class="label">Fixed supply</div><div class="big" id="vaultSupply">1,000,000</div><div class="note">Dots. Declared once. Never again.</div></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>💧 The Pool, your Pocket, the Donation</h2>
+    <div class="grid">
+      <div class="stat pool"><div class="label">The Pool</div><div class="big" id="poolN">1,000,000</div><div class="note">Every grant drains it. It never refills by printing.</div></div>
+      <div class="stat pocket"><div class="label">Your Pocket</div><div class="big" id="pocketN">0</div><div class="note">How many Dots in your pocket?</div></div>
+      <div class="stat"><div class="label">Other pockets (simulated)</div><div class="big" id="othersN">0</div><div class="note">The rest of the players, in aggregate.</div></div>
+      <div class="stat donation"><div class="label">The Donation</div><div class="big" id="donN">0</div><div class="note">Confiscated gouge, waiting to flow back.</div></div>
+    </div>
+    <p style="margin-top:.8rem">
+      <button id="welcomeBtn">＋ Claim your 100 Welcome Dots</button>
+      <button id="arrivalsBtn" class="ghost">Simulate 50 new arrivals</button>
+      <button id="returnBtn" class="ghost">Return the Donation to the Pool</button>
+    </p>
+    <p class="fine" id="poolNote"></p>
+  </section>
+
+  <section class="card">
+    <h2>🏷️ The Price List — Dots price the good, not the local money</h2>
+    <table class="price">
+      <tr><th>Good</th><th>Reference</th><th>Local money (psychological bridge only)</th></tr>
+      <tr><td>🍫 Chocolate bar</td><td><b>10</b> Dots</td><td>a couple of dollars, everywhere</td></tr>
+      <tr><td>👕 T-shirt</td><td><b>100</b> Dots</td><td>twenty-ish dollars, everywhere</td></tr>
+      <tr><td>🚒 Red toy fire engine</td><td><b>200</b> Dots</td><td>the one every kid wants</td></tr>
+    </table>
+    <h3 style="margin:.8rem 0 .4rem">Make a trade</h3>
+    <label>Item
+      <select id="itemSel">
+        <option value="10">🍫 Chocolate bar — ref 10</option>
+        <option value="100">👕 T-shirt — ref 100</option>
+        <option value="200">🚒 Fire engine — ref 200</option>
+      </select>
+    </label>
+    <label>Seller asks <input type="number" id="askN" min="0" value="10" style="width:7rem"></label>
+    <button id="buyBtn">Trade</button>
+    <p class="fine" id="tradeNote">Ask the reference or less — straight trade. Ask more — the excess becomes The Donation, before your eyes.</p>
+  </section>
+
+  <section class="card">
+    <h2>⚖️ Conservation — the invariant, live</h2>
+    <p style="font-size:1.15rem">Pool (<span id="cPool">1,000,000</span>) + Your pocket (<span id="cPocket">0</span>) + Others (<span id="cOthers">0</span>) + Donation (<span id="cDon">0</span>) = <b id="cTotal">1,000,000</b> <span id="cCheck" class="ok">✓ holds</span></p>
+    <p class="fine">If this ever breaks, the game is broken. It can't be broken from inside — every button above moves existing Dots; none creates any.</p>
+  </section>
+
+  <section class="card">
+    <h2>📒 The ledger — every movement, in the open</h2>
+    <ul id="ledger"><li><span class="t">start</span>Genesis: 1,000,000 Dots declared against the painting. The Pool holds them all.</li></ul>
+  </section>
+
+</main>
+<script>
+(function(){
+  "use strict";
+  var SUPPLY = 1000000, WELCOME = 100;
+  var S = { pool: SUPPLY, pocket: 0, others: 0, donated: 0, welcomed: false };
+  function $(id){ return document.getElementById(id); }
+  function fmt(n){ return n.toLocaleString('en-US'); }
+  function log(msg){
+    var li = document.createElement('li');
+    var t = new Date().toLocaleTimeString();
+    li.innerHTML = '<span class="t">'+t+'</span>' + msg;
+    var L = $('ledger'); L.insertBefore(li, L.firstChild);
+  }
+  function render(flashId){
+    $('poolN').textContent = fmt(S.pool);
+    $('pocketN').textContent = fmt(S.pocket);
+    $('othersN').textContent = fmt(S.others);
+    $('donN').textContent = fmt(S.donated);
+    $('cPool').textContent = fmt(S.pool);
+    $('cPocket').textContent = fmt(S.pocket);
+    $('cOthers').textContent = fmt(S.others);
+    $('cDon').textContent = fmt(S.donated);
+    var total = S.pool + S.pocket + S.others + S.donated;
+    $('cTotal').textContent = fmt(total);
+    var ok = (total === SUPPLY);
+    $('cCheck').textContent = ok ? '✓ holds' : '✗ BROKEN';
+    $('cCheck').className = ok ? 'ok' : 'bad';
+    $('welcomeBtn').disabled = S.welcomed || S.pool < WELCOME;
+    $('returnBtn').disabled = S.donated <= 0;
+    if (flashId){ var el = $(flashId); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+  }
+  $('welcomeBtn').addEventListener('click', function(){
+    if (S.welcomed || S.pool < WELCOME) return;
+    S.pool -= WELCOME; S.pocket += WELCOME; S.welcomed = true;
+    log('Welcome: <b>100 Dots</b> moved from the Pool to your Pocket. Nothing created.');
+    $('poolNote').textContent = 'The Pool drains with every arrival. It never refills by printing — only by the Donation flowing back.';
+    render('pocketN');
+  });
+  $('arrivalsBtn').addEventListener('click', function(){
+    var n = 0;
+    for (var i=0;i<50 && S.pool>=WELCOME;i++){ S.pool-=WELCOME; S.others+=WELCOME; n++; }
+    log('Arrival wave: <b>'+n+' newcomers</b> × 100 Welcome Dots = '+fmt(n*WELCOME)+' Dots left the Pool for other pockets.');
+    if (S.pool < WELCOME) log('The Pool is nearly empty — from here, the game plays on with what circulates. No printing. Ever.');
+    render('poolN');
+  });
+  $('returnBtn').addEventListener('click', function(){
+    if (S.donated<=0) return;
+    log('The Donation of <b>'+fmt(S.donated)+' Dots</b> flows back into the Pool — the gouge feeds future Welcome Dots.');
+    S.pool += S.donated; S.donated = 0;
+    render('poolN');
+  });
+  $('buyBtn').addEventListener('click', function(){
+    var ref = parseInt($('itemSel').value,10);
+    var ask = parseInt($('askN').value,10);
+    var name = $('itemSel').selectedOptions[0].text.split(' — ')[0];
+    if (!(ask>=0)) { $('tradeNote').textContent = 'The seller has to ask a real number.'; return; }
+    if (ask > S.pocket) { $('tradeNote').textContent = 'Your pocket holds '+fmt(S.pocket)+' — you can\'t spend what you don\'t have. No debt in the Madhouse.'; return; }
+    S.pocket -= ask;
+    if (ask <= ref){
+      S.others += ask;
+      log('Trade: '+name+' for <b>'+fmt(ask)+' Dots</b> (ref '+ref+'). Straight trade — seller keeps it all.');
+      $('tradeNote').textContent = 'Clean trade. '+(ask<ref?'You paid under the reference — generosity, the game\'s favorite move.':'Right on the reference.');
+    } else {
+      var excess = ask - ref;
+      S.others += ref; S.donated += excess;
+      log('Trade: '+name+' — seller asked <b>'+fmt(ask)+'</b> (ref '+ref+'). Seller keeps '+ref+'; <b class="bad" style="color:#c8321e">'+fmt(excess)+' Dots of gouge became The Donation.</b>');
+      $('tradeNote').textContent = 'The gouge ('+fmt(excess)+' Dots) was taken and became The Donation. The seller kept the reference. Everyone saw it happen.';
+    }
+    render('donN');
+  });
+  render();
+})();
+</script>
+</body>
+</html>

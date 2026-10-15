@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join the MADHOUSE — pick your token</title>
+<style>
+  :root { --ink:#1d1a16; --paper:#faf6ee; --gold:#ffd23f; --blue:#1d4fa3; --purple:#7a3fb0; }
+  * { box-sizing:border-box; }
+  body { font-family: Georgia, serif; background:var(--paper); color:var(--ink); margin:0; min-height:100vh; display:flex; flex-direction:column; align-items:center; }
+  header { background:var(--ink); color:var(--paper); width:100%; text-align:center; padding:1.4rem 1rem .9rem; }
+  header h1 { margin:0; letter-spacing:.1em; font-size:1.6rem; } header h1 .mad { color:var(--gold); }
+  header p { font-style:italic; opacity:.8; margin:.4rem 0 0; font-size:.95rem; }
+  #phone { width:min(430px,94vw); background:#fff; border:3px solid var(--ink); border-radius:22px; margin:1.2rem 0; padding:1rem; box-shadow:6px 6px 0 rgba(29,26,22,.12); display:flex; flex-direction:column; min-height:480px; }
+  #chat { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:.5rem; padding:.2rem; max-height:52vh; }
+  .msg { max-width:88%; padding:.6rem .8rem; border-radius:14px; line-height:1.45; font-size:.96rem; }
+  .bot { background:#f1ead9; border:1px solid #d8cba4; align-self:flex-start; border-bottom-left-radius:4px; }
+  .me { background:var(--blue); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .msg b.dot { color:var(--blue); }
+  .msg .crystal { font-size:1.4rem; }
+  #choices { display:flex; flex-wrap:wrap; gap:.5rem; padding:.6rem .2rem 0; min-height:3rem; }
+  #choices button { font-family:inherit; font-size:1.02rem; border:2px solid var(--ink); background:#fff; border-radius:999px; padding:.5rem 1.1rem; cursor:pointer; }
+  #choices button:hover { background:var(--gold); }
+  #choices input { font-family:inherit; font-size:1rem; border:2px solid var(--ink); border-radius:999px; padding:.5rem 1rem; flex:1; min-width:140px; }
+  .swatch { display:inline-block; width:1em; height:1em; border-radius:50%; margin-right:.3em; vertical-align:-.1em; border:1px solid #999; }
+  #pocketBar { display:none; text-align:center; background:#eef4ff; border:2px dashed var(--blue); border-radius:12px; padding:.7rem; margin-top:.6rem; }
+  #pocketBar .n { font-size:1.6rem; font-weight:bold; color:var(--blue); }
+  #pocketBar .who { font-size:1.05rem; margin-bottom:.3rem; }
+  .fine { font-size:.82rem; opacity:.65; text-align:center; max-width:460px; padding:0 1rem 2rem; font-style:italic; }
+  a.enter { display:inline-block; margin-top:.5rem; background:var(--ink); color:#fff; padding:.6rem 1.2rem; border-radius:10px; text-decoration:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="mad">MADHOUSE</span> — JOIN THE GAME</h1>
+  <p>No forms. No email. No "create account." Just play.</p>
+</header>
+
+<div id="phone">
+  <div id="chat"></div>
+  <div id="choices"></div>
+  <div id="pocketBar">
+    <div class="who" id="whoLine"></div>
+    🟣 Your Pocket: <span class="n" id="pocketN">0</span> Dots<br>
+    <span style="font-size:.85rem;opacity:.7">login saved automatically — that's you now</span><br>
+    <a class="enter" href="pocket.html">Enter the Madhouse →</a>
+  </div>
+</div>
+<p class="fine">Two questions, a name, and a parlor reading. The bot watches your picks the way a mentalist watches a volunteer — and tells you what it saw. It's a game, not a diagnosis. The good ones always feel true, don't they?</p>
+
+<script>
+(function(){
+  "use strict";
+  var chat = document.getElementById('chat');
+  var choices = document.getElementById('choices');
+  var state = { number:null, color:null, name:null, chrono:null, pocket:0, paceMs:null, _t0:0, id:null };
+
+  // Back end: when served over http(s), talk to server.py; otherwise local demo.
+  var API = (location.protocol === 'http:' || location.protocol === 'https:');
+
+  var COLORS = { red:['🔴','#d33'], blue:['🔵','#1d4fa3'], green:['🟢','#2a8a2a'], purple:['🟣','#7a3fb0'] };
+  var NUM_READ = {
+    '1':'the <b>Forerunner</b> — first through the door, likes to lead the parade',
+    '2':'the <b>Partner</b> — sees both sides, the one everyone wants on their team',
+    '3':'the <b>Trickster</b> — sees the game inside the game, here for the fun'
+  };
+  var COL_READ = {
+    red:'the <b>Spark</b> — acts first, feels everything at full volume',
+    blue:'the <b>Deep</b> — calm water, notices what others miss',
+    green:'the <b>Grower</b> — makes things live; people lean toward you',
+    purple:'the <b>Mystery</b> — always suspected the world is weirder than it admits'
+  };
+  var NAME_SUGGEST = {
+    red:['Big Boy','Blaze','Captain'],
+    blue:['Sweetheart','Marina','Doc'],
+    green:['Lucky','Ivy','Sprout'],
+    purple:['Darling','Pixie','The Magician']
+  };
+
+  // returning player? login was saved automatically.
+  try {
+    var saved = JSON.parse(localStorage.getItem('madhouse_login') || 'null');
+    if (saved && saved.name) {
+      state = saved;
+      var greet = function(){
+        say('bot','Welcome back, <b>'+esc(saved.name)+'</b> '+COLORS[saved.color][0]+'<br>Your Pocket holds <b class="dot">'+state.pocket+' Dots</b>. The game kept your seat warm.');
+        showPocket();
+      };
+      if (API && saved.id){
+        fetch('/api/pocket?id='+encodeURIComponent(saved.id)).then(function(r){ return r.json(); }).then(function(p){
+          if (p && typeof p.pocket === 'number'){
+            state.pocket = p.pocket;
+            try { localStorage.setItem('madhouse_login', JSON.stringify(state)); } catch(e){}
+          }
+          greet();
+        }).catch(greet);
+      } else greet();
+      return;
+    }
+  } catch(e){}
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function say(who, html, done){
+    var d = document.createElement('div');
+    d.className = 'msg ' + who;
+    chat.appendChild(d);
+    if (who === 'bot'){
+      d.textContent = '…';
+      setTimeout(function(){ d.innerHTML = html; chat.scrollTop = chat.scrollHeight; if(done) done(); }, 650);
+    } else { d.innerHTML = html; chat.scrollTop = chat.scrollHeight; if(done) done(); }
+  }
+  function btn(label, next){
+    var b = document.createElement('button');
+    b.innerHTML = label;
+    b.onclick = function(){ choices.innerHTML=''; say('me', label, next); };
+    choices.appendChild(b);
+  }
+  function start(){
+    say('bot', 'Welcome to the <b>MADHOUSE</b> 🎲<br>Everyone knows it\'s a game. <i>We say so.</i><br><br>Two questions and you\'re playing. No name, no email, no forms — pick your token like a board game.', function(){
+      say('bot','Pick a number: <b>1, 2, or 3.</b>', function(){
+        choices.innerHTML='';
+        state._t0 = Date.now();
+        ['1','2','3'].forEach(function(n){ btn(n, function(){ state.number=n; state.paceMs = Date.now()-state._t0; pickColor(); }); });
+      });
+    });
+  }
+  function pickColor(){
+    say('bot','Choose a color:', function(){
+      choices.innerHTML='';
+      Object.keys(COLORS).forEach(function(c){
+        btn('<span class="swatch" style="background:'+COLORS[c][1]+'"></span>'+c, function(){ state.color=c; pickName(); });
+      });
+    });
+  }
+  function pickName(){
+    var sugg = NAME_SUGGEST[state.color];
+    say('bot','Now — a name. The bot has a <i>feeling</i> about you... 🔮<br>Tap one, or write your own:', function(){
+      choices.innerHTML='';
+      sugg.forEach(function(nm){ btn('“'+nm+'”', function(){ state.name=nm; chrono(); }); });
+      var inp = document.createElement('input');
+      inp.placeholder = '✏️ my own name…';
+      var go = document.createElement('button'); go.textContent = '✓';
+      go.onclick = function(){
+        var v = inp.value.trim();
+        if(!v) return;
+        choices.innerHTML='';
+        say('me', esc(v), function(){ state.name=v; chrono(); });
+      };
+      inp.onkeydown = function(e){ if(e.key==='Enter') go.onclick(); };
+      choices.appendChild(inp); choices.appendChild(go);
+      inp.focus();
+    });
+  }
+  var CHRONO_READ = {
+    morning:'an <b>early bird</b> — first light is your element; steady hands, planners\' hours',
+    afternoon:'a <b>golden-afternoon soul</b> — you come alive when the day hits its stride',
+    night:'a <b>night owl</b> — your brain does its best plotting after dark'
+  };
+  function chrono(){
+    say('bot','Last one — when do you feel most alive?', function(){
+      choices.innerHTML='';
+      [['🌅 early morning','morning'],['🌇 golden afternoon','afternoon'],['🌃 deep night','night']].forEach(function(o){
+        btn(o[0], function(){ state.chrono=o[1]; reading(); });
+      });
+    });
+  }
+  function reading(){
+    var e = COLORS[state.color][0];
+    var secs = Math.max(1, Math.round((state.paceMs||3000)/1000));
+    var paceLine = (state.paceMs||3000) < 5000
+      ? 'You picked your number in '+secs+' second'+(secs===1?'':'s')+' — <b>decisive</b>.'
+      : 'You took your time over the number — <b>deliberate</b>, reading the room first.';
+    say('bot','<span class="crystal">🔮</span> The bot closes its eyes...<br><br>You picked <b>'+state.number+'</b> — '+NUM_READ[state.number]+'.<br><br>'+e+' '+state.color+' — the color station is <i>pure theater</i>, and you wear it beautifully. (In the old workshop tongue: '+COL_READ[state.color]+'.)<br><br>'+paceLine+'<br><br>And '+CHRONO_READ[state.chrono]+' — that one\'s real, a small true thing.<br><br>You named yourself <b>'+esc(state.name)+'</b> — that\'s you telling me exactly how you want to be seen, and I am honored to comply.', function(){
+      say('bot','Hey '+esc(state.name)+' — you\'re part of the <b>clan</b> now. You\'re almost there, and we\'re going to get you there. Welcome to the family. 💛<br><br>This clan is generous, kind-hearted, intuitive, sweet, gentle, and wondrous. We extend ourselves to each other — and to strangers. We carry love for ourselves, love for each other, love for humanity. Open. That\'s how we know our own, and that\'s what keeps the game from ever straying.', function(){
+      say('bot','<i>(It\'s a parlor game, not a diagnosis — the color bit is theater, the rest is you. The good ones always feel true, don\'t they?)</i>', function(){
+        var land = function(pocket, giftNote){
+          state.pocket = pocket;
+          try { localStorage.setItem('madhouse_login', JSON.stringify(state)); } catch(e2){}
+          showPocket();
+          say('bot','<b class="dot">'+state.pocket+' Welcome Dots</b> just landed in your Pocket — from the Pool, free, no catch.'+giftNote+' Your login saved itself; that\'s you now.<br><br>Three rules, then go play:<br>1️⃣ Fixed supply — nothing is printed, ever.<br>2️⃣ Price List: chocolate 10, t-shirt 100, fire engine 200.<br>3️⃣ Ask above the reference and the excess becomes <b>The Donation</b>.', function(){
+            generosity();
+          });
+        };
+        var landLocal = function(){
+          var gifts = [];
+          try { gifts = JSON.parse(localStorage.getItem('madhouse_gifts') || '[]'); } catch(e2){}
+          var giftExtra = 0, giftNote = '';
+          if (gifts.length){
+            var g = gifts.shift();
+            giftExtra = 5;
+            try { localStorage.setItem('madhouse_gifts', JSON.stringify(gifts)); } catch(e3){}
+            giftNote = '<br><br>🌱 <b>'+esc(g.from)+'</b> passed 5 Dots to you before you even arrived — a hello from a stranger. That\'s the clan.';
+          }
+          land(100 + giftExtra, giftNote);
+        };
+        if (API){
+          fetch('/api/join',{method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({number:state.number,color:state.color,name:state.name,chrono:state.chrono})})
+          .then(function(r){ if(!r.ok) throw new Error('join-failed'); return r.json(); })
+          .then(function(j){
+            state.id = j.id;
+            var giftNote = (j.gift && j.gift.from)
+              ? '<br><br>🌱 <b>'+esc(j.gift.from)+'</b> passed 5 Dots to you before you even arrived — a hello from a stranger. That\'s the clan.' : '';
+            land(j.pocket, giftNote);
+          }).catch(landLocal);
+        } else landLocal();
+      });
+      });
+    });
+  }
+  function mapOptIn(){
+    say('bot','One more — <i>optional</i>, only if you want it.<br><br>The clan keeps a <b>living map</b>: every light is a player who chose to be seen. Game name and a rough region — a city is plenty, nothing exact. Markers are scattered on purpose; nobody sees your pocket, nobody sees you.<br><br>Want a light on the map?', function(){
+      choices.innerHTML='';
+      btn('🗺️ Yes — put me on the map', function(){
+        say('bot','What rough region should your light shine from? (a city is plenty — e.g. Lyon, Berlin)', function(){
+          choices.innerHTML='';
+          var inp = document.createElement('input');
+          inp.placeholder = '✏️ my region…';
+          var go = document.createElement('button'); go.textContent = '✓';
+          var submit = function(){
+            var v = inp.value.trim().slice(0,40);
+            choices.innerHTML='';
+            if(!v){ say('bot','Skipped — no light, no problem. 💛<br><br>Enter the Madhouse. 👇'); return; }
+            say('me', esc(v), function(){
+              var finish = function(){ say('bot','🗺️ Done — your light is on the map.<br><br>Enter the Madhouse. 👇'); };
+              if (API && state.id){
+                fetch('/api/presence',{method:'POST',headers:{'Content-Type':'application/json'},
+                  body:JSON.stringify({id:state.id, region:v})}).then(finish).catch(finish);
+              } else finish();
+            });
+          };
+          go.onclick = submit;
+          inp.onkeydown = function(e){ if(e.key==='Enter') submit(); };
+          choices.appendChild(inp); choices.appendChild(go);
+          inp.focus();
+        });
+      });
+      btn('Skip', function(){
+        say('bot','No light, no problem — you\'re in either way. 💛<br><br>Enter the Madhouse. 👇');
+      });
+    });
+  }
+  function generosity(){
+    say('bot','One tradition before you go in — <i>entirely</i> your call.<br><br>The Pool just welcomed you with '+state.pocket+' Dots. Players pass 5 to the next newcomer who walks in — a small hello from you, before you\'ve even met them.<br><br>Want to?', function(){
+      choices.innerHTML='';
+      btn('🎁 Yes — pass 5 Dots', function(){
+        var done = function(){
+          showPocket();
+          say('bot','🎁 Done. 5 Dots leave your Pocket — the next player who walks in gets a little extra, with your name on it.<br><br>Generous. Kind-hearted. Open. Willing to extend yourself to someone you haven\'t met — including the stranger you\'ll be tomorrow.<br><br>That\'s the clan, '+esc(state.name)+'. That\'s how we know our own. 💛', function(){ mapOptIn(); });
+        };
+        var doneLocal = function(){
+          state.pocket -= 5;
+          try {
+            localStorage.setItem('madhouse_login', JSON.stringify(state));
+            var gifts = JSON.parse(localStorage.getItem('madhouse_gifts') || '[]');
+            gifts.push({from: state.name});
+            localStorage.setItem('madhouse_gifts', JSON.stringify(gifts));
+          } catch(e2){}
+          done();
+        };
+        if (API && state.id){
+          fetch('/api/gift',{method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({id:state.id})})
+          .then(function(r){ if(!r.ok) throw new Error('gift-failed'); return r.json(); })
+          .then(function(j){
+            state.pocket = j.pocket;
+            try { localStorage.setItem('madhouse_login', JSON.stringify(state)); } catch(e2){}
+            done();
+          }).catch(doneLocal);
+        } else doneLocal();
+      });
+      btn('Not right now', function(){
+        say('bot','No pressure at all, '+esc(state.name)+' — the Dots are yours, all '+state.pocket+'. Generosity can\'t be taxed, only offered.<br><br>The door\'s open either way. Welcome to the family. 💛', function(){ mapOptIn(); });
+      });
+    });
+  }
+  function showPocket(){
+    document.getElementById('pocketN').textContent = state.pocket;
+    document.getElementById('whoLine').innerHTML = '<b>'+esc(state.name)+'</b> — Player '+state.number+', '+COLORS[state.color][0]+' '+state.color;
+    document.getElementById('pocketBar').style.display = 'block';
+  }
+  start();
+})();
+</script>
+</body>
+</html>
