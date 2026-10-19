@@ -1,0 +1,820 @@
+{
+  "list": "student_ways",
+  "title": "101 Student Ways",
+  "items": [
+    {
+      "id": "sw001",
+      "title": "Start a homework club",
+      "description": "Pick one evening a week and do homework together in the same room — questions welcome, silence fine.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 20
+    },
+    {
+      "id": "sw002",
+      "title": "Tutor a struggling classmate",
+      "description": "Sit with them for an hour and walk through the topic they dread until it clicks.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw003",
+      "title": "Share your class notes",
+      "description": "Offer your clean notes to someone who missed class or whose notes are a mess.",
+      "category": "kindness",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw004",
+      "title": "Run an exam-season meal train",
+      "description": "Cook or buy an extra portion and drop it at a friend's door during finals week.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw005",
+      "title": "Include the left-out kid",
+      "description": "Invite the quiet one at the edge of the playground or cafeteria into the game or table.",
+      "category": "kindness",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw006",
+      "title": "Walk a new student around",
+      "description": "Show them where everything is, introduce them to your friends, remember their name.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 20
+    },
+    {
+      "id": "sw007",
+      "title": "Carry someone's heavy bag",
+      "description": "Spot the person hauling gear up the stairs and take half the load.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 10
+    },
+    {
+      "id": "sw008",
+      "title": "Lend out your umbrella",
+      "description": "Give it to the person about to walk into the rain; you can duck under a roof.",
+      "category": "kindness",
+      "setting": "anywhere",
+      "reward": 10
+    },
+    {
+      "id": "sw009",
+      "title": "Cover a shift for a classmate",
+      "description": "Take their campus café or library shift so they can sit an exam or rest.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw010",
+      "title": "Help a teacher with tech",
+      "description": "Show them how to share their screen or set up the projector before class.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 15
+    },
+    {
+      "id": "sw011",
+      "title": "Teach an elder to video-call",
+      "description": "Help a grandparent or older neighbor learn to video-call their family.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw012",
+      "title": "Read to kids at the library",
+      "description": "Volunteer at the children's story hour and read picture books out loud.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 30,
+      "min_age_hint": 16
+    },
+    {
+      "id": "sw013",
+      "title": "Swap textbooks with friends",
+      "description": "Trade this term's books so nobody buys new — leave a friendly note inside the cover.",
+      "category": "kindness",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw014",
+      "title": "Leave a kind note in a library book",
+      "description": "Write \"good luck, you've got this\" on a slip and tuck it into a textbook.",
+      "category": "kindness",
+      "setting": "anywhere",
+      "reward": 10
+    },
+    {
+      "id": "sw015",
+      "title": "Compliment someone's work",
+      "description": "Tell a classmate exactly what you admired about their essay or project.",
+      "category": "kindness",
+      "setting": "anywhere",
+      "reward": 10
+    },
+    {
+      "id": "sw016",
+      "title": "Defend someone being mocked",
+      "description": "Speak up kindly when a joke goes mean; a single voice changes the room.",
+      "category": "kindness",
+      "setting": "anywhere",
+      "reward": 25
+    },
+    {
+      "id": "sw017",
+      "title": "Forgive the fight",
+      "description": "Apologize first or accept the apology; don't let a silly row end a friendship.",
+      "category": "kindness",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw018",
+      "title": "Text a friend who's been absent",
+      "description": "A simple \"missed you in class today, everything okay?\" goes further than you think.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 10
+    },
+    {
+      "id": "sw019",
+      "title": "Save a seat for the shy one",
+      "description": "Keep the chair next to you open and wave them over.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 10
+    },
+    {
+      "id": "sw020",
+      "title": "Cheer at the school play",
+      "description": "Go to the performance nobody talks about and clap the loudest.",
+      "category": "kindness",
+      "setting": "local",
+      "reward": 20
+    },
+    {
+      "id": "sw021",
+      "title": "Draw a portrait of a friend",
+      "description": "Sketch someone in class and give it to them as a surprise.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw022",
+      "title": "Make a playlist for studying",
+      "description": "Build a calm focus playlist and share it with your study group.",
+      "category": "craft",
+      "setting": "digital",
+      "reward": 15
+    },
+    {
+      "id": "sw023",
+      "title": "Bake cookies for your dorm floor",
+      "description": "Knock on doors with a warm tray at study time.",
+      "category": "craft",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw024",
+      "title": "Knit a scarf for winter",
+      "description": "Learn basic knitting and make something warm for someone who shivers.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 30
+    },
+    {
+      "id": "sw025",
+      "title": "Paint a kindness rock",
+      "description": "Decorate a smooth stone with words of encouragement and leave it on campus.",
+      "category": "craft",
+      "setting": "local",
+      "reward": 10
+    },
+    {
+      "id": "sw026",
+      "title": "Sew a patch on a friend's jacket",
+      "description": "Fix the torn sleeve or add a fun patch; small stitches, big gratitude.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw027",
+      "title": "Build a cardboard arcade",
+      "description": "Set up fun cardboard games in the common room for a Friday afternoon.",
+      "category": "craft",
+      "setting": "local",
+      "reward": 30
+    },
+    {
+      "id": "sw028",
+      "title": "Make bookmarks for the library",
+      "description": "Cut and decorate a batch for the librarian to hand out.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw029",
+      "title": "Write a poem for your teacher",
+      "description": "Thank them in verse on the last day of term.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw030",
+      "title": "Photograph the school year",
+      "description": "Collect the candid moments and gift the album to your class at graduation.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 30
+    },
+    {
+      "id": "sw031",
+      "title": "Craft handmade birthday cards",
+      "description": "Keep a stash so nobody's birthday passes unnoticed.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw032",
+      "title": "Design a poster for a good cause",
+      "description": "Make the flyer for the food drive or the charity match.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw033",
+      "title": "Make a welcome kit for exchange students",
+      "description": "A map, a snack, a note in their language — small box, big landing.",
+      "category": "craft",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw034",
+      "title": "Build a birdhouse for the courtyard",
+      "description": "Simple wood and nails; the birds come, and so do the smiles.",
+      "category": "craft",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw035",
+      "title": "Write thank-you letters",
+      "description": "Real paper notes to the dinner lady, the cleaner, the coach.",
+      "category": "craft",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw036",
+      "title": "Organize a campus clean-up",
+      "description": "Grab bags and gloves; pick a Saturday, clean one corner of campus together.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 30
+    },
+    {
+      "id": "sw037",
+      "title": "Join a park clean with classmates",
+      "description": "Meet after class and leave the park better than you found it.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 30
+    },
+    {
+      "id": "sw038",
+      "title": "Work a food bank shift",
+      "description": "Sort donations or hand out parcels for an afternoon; bring a friend.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 35
+    },
+    {
+      "id": "sw039",
+      "title": "Volunteer at the school fair",
+      "description": "Run a stall, carry boxes, sell tickets — show up early.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw040",
+      "title": "Walk shelter dogs together",
+      "description": "Take the whole study group to walk dogs at the local shelter on a weekend.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 35
+    },
+    {
+      "id": "sw041",
+      "title": "Plant trees on campus",
+      "description": "Join the planting morning; your tree will outlive your exams.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 30
+    },
+    {
+      "id": "sw042",
+      "title": "Run a charity fun run",
+      "description": "Train a little, run a lot, wear the silly costume with pride.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 35
+    },
+    {
+      "id": "sw043",
+      "title": "Lead a midnight study walk",
+      "description": "During exam week, take tired friends for a 20-minute walk around campus.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 15,
+      "min_age_hint": 16
+    },
+    {
+      "id": "sw044",
+      "title": "Organize a textbook swap day",
+      "description": "Book a classroom, lay out the books, let everyone trade for free.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw045",
+      "title": "Start a lunch-time walking club",
+      "description": "Same route, same time daily; conversations happen on their own.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 15
+    },
+    {
+      "id": "sw046",
+      "title": "Plan a group trip to a museum",
+      "description": "Pick the free day, pack snacks, let curiosity lead.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw047",
+      "title": "Cycle to the next town together",
+      "description": "Map a safe route, ride out on a Sunday, celebrate with ice cream.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 30
+    },
+    {
+      "id": "sw048",
+      "title": "Camp out under the stars",
+      "description": "Tents in the backyard or the hills; tell stories, watch the sky.",
+      "category": "adventure",
+      "setting": "anywhere",
+      "reward": 35
+    },
+    {
+      "id": "sw049",
+      "title": "Organize a scavenger hunt",
+      "description": "Hide clues across campus; the winning team gets bragging rights.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw050",
+      "title": "Join a beach clean-up",
+      "description": "One tide's worth of plastic, one big group photo at the end.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 35
+    },
+    {
+      "id": "sw051",
+      "title": "Visit a care home with friends",
+      "description": "Go in a group, chat and listen; bring the jam session if they like.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 40,
+      "min_age_hint": 16
+    },
+    {
+      "id": "sw052",
+      "title": "Volunteer at the children's hospital playroom",
+      "description": "Read, draw, and play in an organized group visit.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 40,
+      "min_age_hint": 16
+    },
+    {
+      "id": "sw053",
+      "title": "Help at the school garden",
+      "description": "Water, weed, and harvest; take some veg home for dinner.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw054",
+      "title": "Coach kids' Saturday football",
+      "description": "Volunteer with the little league and teach them the basics gently.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 35,
+      "min_age_hint": 16
+    },
+    {
+      "id": "sw055",
+      "title": "Join a river clean-up day",
+      "description": "Waders on, bags ready; rivers remember who looked after them.",
+      "category": "adventure",
+      "setting": "local",
+      "reward": 35
+    },
+    {
+      "id": "sw056",
+      "title": "Quiz a friend before the test",
+      "description": "Fire questions at each other for 20 minutes; the one who asks learns too.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw057",
+      "title": "Explain one concept simply",
+      "description": "Pick the hardest topic and teach it like you're explaining it to a child.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw058",
+      "title": "Start a language practice circle",
+      "description": "Meet weekly, speak only the new language, laugh at mistakes together.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw059",
+      "title": "Be a conversation partner",
+      "description": "Pair up with someone learning your language; talk over coffee once a week.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 25
+    },
+    {
+      "id": "sw060",
+      "title": "Host a puzzle night",
+      "description": "Bring crosswords, riddles, and logic games; teams of mixed ages welcome.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw061",
+      "title": "Teach a friend chess",
+      "description": "Play open games, explain each piece, lose gracefully on purpose sometimes.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw062",
+      "title": "Learn sign language basics together",
+      "description": "Start with the alphabet and greetings; practice at lunch.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 25
+    },
+    {
+      "id": "sw063",
+      "title": "Run a riddle-of-the-week board",
+      "description": "Post one riddle on the classroom door every Monday; reveal Friday.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw064",
+      "title": "Debate the big question",
+      "description": "Pick a fun topic and argue both sides with respect.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw065",
+      "title": "Start a book circle",
+      "description": "Same book, one month, one honest conversation about it.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw066",
+      "title": "Teach a card game to newcomers",
+      "description": "Patient teachers make lifelong players; shuffling is half the fun.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 15
+    },
+    {
+      "id": "sw067",
+      "title": "Host a spelling bee for fun",
+      "description": "Words get silly, trophies get creative, everyone wins something.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw068",
+      "title": "Form an exam study group",
+      "description": "Pick one subject, meet twice a week, take turns teaching the hard bits.",
+      "category": "riddle",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw069",
+      "title": "Solve a mystery together",
+      "description": "Work through a mystery novel or a puzzle game as a team, no skipping ahead.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw070",
+      "title": "Swap skills with a classmate",
+      "description": "You teach them guitar, they teach you coding; one hour each, every week.",
+      "category": "riddle",
+      "setting": "anywhere",
+      "reward": 25
+    },
+    {
+      "id": "sw071",
+      "title": "Set up video calls for a grandparent",
+      "description": "Configure the app, save the contacts, do a practice call together.",
+      "category": "digital",
+      "setting": "anywhere",
+      "reward": 25
+    },
+    {
+      "id": "sw072",
+      "title": "Help a classmate fix their laptop",
+      "description": "Troubleshoot the frozen screen or the lost file before they panic.",
+      "category": "digital",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw073",
+      "title": "Teach someone to spot scams",
+      "description": "Show an older relative how phishing texts work and what to ignore.",
+      "category": "digital",
+      "setting": "anywhere",
+      "reward": 25
+    },
+    {
+      "id": "sw074",
+      "title": "Make a how-to video for teachers",
+      "description": "Record a simple screen tutorial for the school's most-used app.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 30
+    },
+    {
+      "id": "sw075",
+      "title": "Start a study Discord server",
+      "description": "Set up channels per subject; keep it kind, keep it on topic.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 25
+    },
+    {
+      "id": "sw076",
+      "title": "Share class notes online",
+      "description": "Scan your best notes and post them in the group chat before exams.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 15
+    },
+    {
+      "id": "sw077",
+      "title": "Type up notes for a friend",
+      "description": "Transcribe the messy lecture for the classmate who writes slowly.",
+      "category": "digital",
+      "setting": "anywhere",
+      "reward": 20
+    },
+    {
+      "id": "sw078",
+      "title": "Run a digital photo archive",
+      "description": "Collect and label the year's photos so nobody's memories get lost.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 20
+    },
+    {
+      "id": "sw079",
+      "title": "Teach a friend to code",
+      "description": "One small program at a time; celebrate every \"it works!\"",
+      "category": "digital",
+      "setting": "anywhere",
+      "reward": 30
+    },
+    {
+      "id": "sw080",
+      "title": "Help a small shop go online",
+      "description": "A student weekend project: build a simple page for the corner shop.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 35
+    },
+    {
+      "id": "sw081",
+      "title": "Record an audiobook chapter",
+      "description": "Read a chapter aloud for the school's listening library.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 25
+    },
+    {
+      "id": "sw082",
+      "title": "Make a campus podcast episode",
+      "description": "Interview a teacher or a friend about what they love learning.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 30
+    },
+    {
+      "id": "sw083",
+      "title": "Design a safety poster for the web",
+      "description": "Make a clear, kind graphic about online privacy for younger students.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 20
+    },
+    {
+      "id": "sw084",
+      "title": "Help a friend set strong passwords",
+      "description": "Walk them through a password manager; no judgment, just help.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 20
+    },
+    {
+      "id": "sw085",
+      "title": "Transcribe an interview for the school paper",
+      "description": "Type it up carefully; every voice deserves to be heard right.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 20
+    },
+    {
+      "id": "sw086",
+      "title": "Start a kind comments pact",
+      "description": "Agree with friends to leave three kind comments a day online.",
+      "category": "digital",
+      "setting": "digital",
+      "reward": 15
+    },
+    {
+      "id": "sw087",
+      "title": "Work a shift for a cause",
+      "description": "Take one café or market shift and give the wages to the school's charity drive.",
+      "category": "local",
+      "setting": "local",
+      "reward": 35
+    },
+    {
+      "id": "sw088",
+      "title": "Lift-share to the match",
+      "description": "Offer spare seats in the car to teammates who'd walk otherwise.",
+      "category": "local",
+      "setting": "local",
+      "reward": 20
+    },
+    {
+      "id": "sw089",
+      "title": "Help the new kid find the bus",
+      "description": "Walk them to the stop on the first day and note the times down.",
+      "category": "local",
+      "setting": "local",
+      "reward": 15
+    },
+    {
+      "id": "sw090",
+      "title": "Tidy the classroom before you leave",
+      "description": "Stack chairs, pick up paper; the next class walks into calm.",
+      "category": "local",
+      "setting": "local",
+      "reward": 10
+    },
+    {
+      "id": "sw091",
+      "title": "Water the classroom plants",
+      "description": "Adopt the sad ones by the window; green things remember kindness.",
+      "category": "local",
+      "setting": "local",
+      "reward": 10
+    },
+    {
+      "id": "sw092",
+      "title": "Organize the lost-property box",
+      "description": "Sort it, label it, and reunite jumpers with their owners.",
+      "category": "local",
+      "setting": "local",
+      "reward": 20
+    },
+    {
+      "id": "sw093",
+      "title": "Help set up the school dance",
+      "description": "Carry speakers, hang lights, test the playlist; arrive before the crowd.",
+      "category": "local",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw094",
+      "title": "Run the tuck-shop rota",
+      "description": "Volunteer a lunch hour to sell snacks and keep the queue friendly.",
+      "category": "local",
+      "setting": "local",
+      "reward": 20
+    },
+    {
+      "id": "sw095",
+      "title": "Teach a sport to a beginner",
+      "description": "Show someone how to serve, dribble, or swim one calm lesson at a time.",
+      "category": "local",
+      "setting": "local",
+      "reward": 30
+    },
+    {
+      "id": "sw096",
+      "title": "Start a running group",
+      "description": "Slow pace, no pressure; the slowest runner sets the speed.",
+      "category": "local",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw097",
+      "title": "Jam with friends in the park",
+      "description": "Bring instruments, play for anyone who wanders by.",
+      "category": "local",
+      "setting": "local",
+      "reward": 25
+    },
+    {
+      "id": "sw098",
+      "title": "Perform for a care home",
+      "description": "Take the school band or drama group to play for residents in a group visit.",
+      "category": "local",
+      "setting": "local",
+      "reward": 40,
+      "min_age_hint": 16
+    },
+    {
+      "id": "sw099",
+      "title": "Lead the morning warm-up",
+      "description": "Volunteer to run stretches before PE; the grumpy ones will thank you later.",
+      "category": "local",
+      "setting": "local",
+      "reward": 15
+    },
+    {
+      "id": "sw100",
+      "title": "Help a friend move dorm rooms",
+      "description": "Lend your arms and your Saturday; pizza is traditional payment.",
+      "category": "local",
+      "setting": "local",
+      "reward": 30
+    },
+    {
+      "id": "sw101",
+      "title": "Draw a map of campus for freshers",
+      "description": "Hand-drawn, with the good shortcuts and the quiet corners marked.",
+      "category": "local",
+      "setting": "local",
+      "reward": 20
+    }
+  ]
+}

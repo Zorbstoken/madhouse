@@ -1,0 +1,27 @@
+--- /home/hatch/workspace/goals/madhouse-nov-20-launch/files/pythonanywhere-deploy/server.py	2026-10-17 18:19:48.701214351 +0300
++++ server.py	2026-10-19 12:03:54.488920325 +0300
+@@ -1648,6 +1648,14 @@
+             except _PoolEmpty:
+                 return self._json({"error": "pool_empty",
+                                    "detail": "The Pool is empty — no new grants."}, 409)
++            pl = data["players"][pid]
++            pp = pl.get("passport") or {}
++            for k in ("door", "world", "interests", "skills", "dreams"):
++                v = body.get(k)
++                if v:
++                    pp[k] = str(v)[:200]
++            if pp:
++                pl["passport"] = pp
+             save(data)
+         return self._json({"id": pid, "token": token,
+                            "name": data["players"][pid]["name"],
+@@ -3605,6 +3613,9 @@
+         self.send_header("Content-Type", ctype)
+         self.send_header("Content-Length", str(len(content)))
+         self.send_header("Access-Control-Allow-Origin", CORS_ORIGIN)
++        if fspath.endswith(".html"):
++            # Entry pages must never go stale in Telegram's mini-app viewer.
++            self.send_header("Cache-Control", "no-cache")
+         self.end_headers()
+         self.wfile.write(content)
+ 
