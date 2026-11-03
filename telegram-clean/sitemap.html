@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MADHOUSE — Site Map</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="app.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1><span class="mad">MADHOUSE</span> — Site Map</h1>
+  <p>Every page in this package, in order. Every link below was checked. No dead ends.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>🗺️ Pages, in order</h2>
+    <div class="grid">
+      <a class="tile" href="index.html">🏠<span>Dashboard</span><em>Home, one-tap start</em></a>
+      <a class="tile" href="compass.html">🧭<span>Compass</span><em>Journey, in order</em></a>
+      <a class="tile" href="control.html">🎛️<span>Control Panel</span><em>Skins, worlds, sound</em></a>
+      <a class="tile" href="sitemap.html">🗺️<span>Site Map</span><em>This page</em></a>
+      <a class="tile" href="games.html">🎮<span>Games</span><em>Tic Tac Toe, Simon</em></a>
+      <a class="tile" href="map.html">🌍<span>Map</span><em>Living Nodes, sample</em></a>
+      <a class="tile" href="townhall.html">🏛️<span>Town Hall</span><em>Three questions, actions</em></a>
+      <a class="tile" href="help.html">❓<span>Help</span><em>Plain words</em></a>
+    </div>
+    <p class="note">Bottom menu order, on every page: Dashboard | Compass | Control | Site Map | Games | Map. Town Hall and Help are one tap from the Dashboard tiles.</p>
+  </section>
+
+  <section class="card">
+    <h2>✂️ Removed on purpose — with replacement</h2>
+    <p><strong>Removed:</strong> the old /start registration conversation (pick a number, a colour, a name, a time). <strong>Replacement:</strong> the Dashboard button in bot.py — open, tap once, Dashboard.</p>
+    <p><strong>Removed:</strong> the old pocket flow and the 50-plus command list. <strong>Replacement:</strong> Dashboard, Compass, Control Panel, Site Map, Games, Map. No command hunting. Live Dots return only when an engine host is connected, and then as a clearly labelled live section, not as a simulation.</p>
+    <p><strong>Removed:</strong> the dead muse.ai Living Map link that the old bot's Living Map button pointed to. <strong>Replacement:</strong> the built-in Map in this package, with sample nodes labelled as samples.</p>
+    <p><strong>Removed:</strong> the 243-button everything page as an entry point. <strong>Replacement:</strong> this Dashboard. The old page's words that are still wanted (story, currents, free ports, crisis words) are kept in short form on Compass, not as 243 buttons.</p>
+    <p><strong>Removed:</strong> menu buttons that only played a sound. <strong>Replacement:</strong> every button in this package either navigates, changes a local setting, shows an answer on the page, or plays a game. Checked by check_links.py and by hand.</p>
+  </section>
+
+  <section class="card">
+    <h2>⏳ Not built yet — stated, not hidden</h2>
+    <p>Pinboard. Live Dots / Pocket / trades. Generosity AI chat. Real music tracks. Recorded voice-over. Seven further games beyond Tic Tac Toe and Simon. A second, live engine sky map.</p>
+    <p class="note">None of these is a button to nowhere in this package. Each is listed here, and only here, until it is built and checked.</p>
+  </section>
+</main>
+<nav class="bottom">
+  <a href="index.html">🏠 Dashboard</a>
+  <a href="compass.html">🧭 Compass</a>
+  <a href="control.html">🎛️ Control</a>
+  <a href="sitemap.html" class="here">🗺️ Site Map</a>
+  <a href="games.html">🎮 Games</a>
+  <a href="map.html">🌍 Map</a>
+</nav>
+</body>
+</html>

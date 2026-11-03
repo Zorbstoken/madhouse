@@ -1,0 +1,54 @@
+/* MADHOUSE Telegram Clean — phone-first, tap not type.
+   No external fonts, no external images, no tracking.
+   Base type 19px, buttons 20px+, one big action per card. */
+:root{
+  --bg:#faf6ee; --ink:#1d1a16; --hint:#6b6357; --card:#ffffff;
+  --gold:#ffd23f; --teal:#0f6f6a; --red:#c8321e;
+  --accent:#1d1a16; --accent-ink:#faf6ee;
+}
+*{box-sizing:border-box}
+body{font-family:Georgia,serif;background:var(--bg);color:var(--ink);
+  margin:0;padding:0 0 7.5rem;font-size:19px;line-height:1.45;
+  -webkit-font-smoothing:antialiased}
+header{text-align:center;padding:1.1rem 1rem .4rem}
+header h1{margin:0;letter-spacing:.08em;font-size:1.5rem}
+header h1 .mad{color:#b8860b}
+header p{font-style:italic;color:var(--hint);margin:.35rem 0 0;font-size:17px}
+main{max-width:560px;margin:0 auto;padding:0 .9rem}
+.card{background:var(--card);border:2px solid var(--ink);border-radius:16px;
+  margin:.85rem 0;padding:1rem 1.05rem;box-shadow:4px 4px 0 rgba(29,26,22,.10)}
+.card h2{margin:.1rem 0 .55rem;font-size:1.25rem}
+.card p{margin:.45rem 0}
+.note{font-size:17px;color:var(--hint);font-style:italic}
+.warn{border-color:var(--red)}
+.ok{color:var(--teal);font-weight:bold}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:.6rem}
+a.tile,button.tile,button.big{display:flex;flex-direction:column;align-items:center;
+  text-align:center;background:var(--bg);border:2px solid var(--ink);border-radius:14px;
+  padding:.9rem .4rem;text-decoration:none;color:var(--ink);font-size:1.9rem;
+  font-family:inherit;cursor:pointer;width:100%}
+a.tile span,button.tile span,button.big span{font-size:20px;font-weight:bold;margin-top:.25rem}
+a.tile em,button.tile em{font-style:normal;font-size:15px;color:var(--hint);margin-top:.15rem}
+button.big,button{font-family:inherit;font-size:20px;background:var(--accent);
+  color:var(--accent-ink);border:2px solid var(--ink);border-radius:12px;
+  padding:.7rem 1rem;cursor:pointer;margin:.3rem 0}
+button.ghost{background:transparent;color:var(--ink)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.tile{background:var(--bg);color:var(--ink)}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
+.answer{background:#fff8d6;border:2px solid var(--ink);border-radius:12px;
+  padding:.8rem;margin-top:.7rem;font-size:19px}
+input[type=text]{font-family:inherit;font-size:19px;padding:.6rem .7rem;
+  border:2px solid var(--ink);border-radius:12px;background:var(--bg);color:var(--ink);width:100%}
+nav.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;flex-wrap:wrap;
+  background:var(--card);border-top:2px solid var(--ink);
+  padding:.4rem .4rem calc(.4rem + env(safe-area-inset-bottom));z-index:10}
+nav.bottom a{flex:1 1 30%;text-align:center;text-decoration:none;color:var(--ink);
+  font-size:17px;font-weight:bold;padding:.55rem .2rem;border-radius:10px}
+nav.bottom a.here{background:var(--gold)}
+.banner{font-size:1.4rem;text-align:center;padding:.7rem;border:2px solid var(--ink);
+  border-radius:12px;background:var(--bg);margin:.6rem 0}
+#globe{background:#123a5e;border-radius:50%;display:block;margin:14px auto}
+.legend span{padding:4px 8px;border-radius:999px;margin:4px;display:inline-block;font-size:16px}
+.ttt{display:grid;grid-template-columns:repeat(3,84px);gap:8px;justify-content:center}
+.ttt button{font-size:28px;height:84px;padding:0}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MADHOUSE — Town Hall</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="app.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1><span class="mad">MADHOUSE</span> — Town Hall</h1>
+  <p>The community square. Tap a question, get a straight answer. No dead ends.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>💛 Three questions — intentional, easy</h2>
+    <div class="grid">
+      <button class="tile" onclick="MH.showAnswer('hallAnswer','<strong>Participate:</strong> hang out, play, join a town hall. Start with Games, or the Map. No form, no fee.')">🤝<span>Participate</span><em>How will you participate?</em></button>
+      <button class="tile" onclick="MH.showAnswer('hallAnswer','<strong>Contribute:</strong> what you bring, what you can help with. A skill, a story, a song, a hand, a place to meet. Say it here in your own words when a live Town Hall host is connected — this page does not send it anywhere yet.')">🎁<span>Contribute</span><em>How will you contribute?</em></button>
+      <button class="tile" onclick="MH.showAnswer('hallAnswer','<strong>Extend to you:</strong> food, water, shelter, clothing, medicine, safety, friendship — held by the community. This page does not promise any of these yet. It names what the community is for.')">💛<span>Extend to you</span><em>How can we extend ourselves to you?</em></button>
+    </div>
+    <div id="hallAnswer" class="answer" style="display:none"></div>
+  </section>
+
+  <section class="card">
+    <h2>🤝 Meet / Make / Help / Play / Explore</h2>
+    <div class="grid">
+      <button class="tile" onclick="MH.showAnswer('hallAnswer','<strong>Meet:</strong> find your people. Say hello, join a circle, make a friend. Live meeting needs a host — this page shows the step, it does not fake a live room.')">👋<span>Meet</span><em>Find your people</em></button>
+      <button class="tile" onclick="MH.showAnswer('hallAnswer','<strong>Make:</strong> build something, a world, a picture, a game, a story. Start with a skin or a world on the Control Panel.')">🛠️<span>Make</span><em>Build something</em></button>
+      <button class="tile" onclick="MH.showAnswer('hallAnswer','<strong>Help:</strong> lend a hand. Help each other is the whole test. Live help matching needs a host — this page does not fake it.')">🆘<span>Help</span><em>Lend a hand</em></button>
+      <a class="tile" href="games.html">🎮<span>Play</span><em>Games, tap to play</em></a>
+      <a class="tile" href="map.html">🌍<span>Explore</span><em>Living Nodes Map</em></a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>📰 Crisis, plainly</h2>
+    <p>When the lights go down, and systems go down, this is a caravan of opportunity: participation, contribution, kindness, generosity. Not a system that promises rescue.</p>
+    <p class="note">No crisis news feed is live in this package. A feed appears here only when its items are checked, with source and date, by country. No uncounted totals, no invented items.</p>
+  </section>
+</main>
+<nav class="bottom">
+  <a href="index.html">🏠 Dashboard</a>
+  <a href="compass.html">🧭 Compass</a>
+  <a href="control.html">🎛️ Control</a>
+  <a href="sitemap.html">🗺️ Site Map</a>
+  <a href="games.html">🎮 Games</a>
+  <a href="map.html">🌍 Map</a>
+</nav>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MADHOUSE — Games</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="app.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1><span class="mad">MADHOUSE</span> — Games</h1>
+  <p>Games, not games — aspects of the game. Tap to play, no typing needed.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>🎮 Tic Tac Toe — Trade, Barter, Commerce</h2>
+    <p>Welcome to the market square. Barter your moves like goods at a trading post: X is the buyer, O is the seller. Three in a row closes the deal and wins the trade.</p>
+    <div class="ttt" id="ttt"></div>
+    <p id="tttmsg">Your turn — X, then O. Tap a square.</p>
+    <button onclick="resetTTT()">↻ New game</button>
+  </section>
+
+  <section class="card">
+    <h2>🗣️ Simon Says — AI Command Center</h2>
+    <p>Simon says: tap the colours in order. Simon is Generosity AI as a command center here in demo form only — the sequence is made on this page, no AI host is answering.</p>
+    <div class="row">
+      <button onclick="simonTap('🔴')">🔴</button>
+      <button onclick="simonTap('🟢')">🟢</button>
+      <button onclick="simonTap('🔵')">🔵</button>
+      <button onclick="simonTap('🟡')">🟡</button>
+    </div>
+    <p id="simonmsg">Press Start Simon, then repeat the sequence.</p>
+    <button onclick="startSimon()">▶ Start Simon</button>
+  </section>
+
+  <section class="card">
+    <h2>⏳ 7 others, queued — not playable yet</h2>
+    <p>Rock Paper Scissors Dynamite, Hide-and-Seek, I Spy, Tetragrammatron dice spin, This-or-That, Fortune, Seek Sanctuary steps — to be confirmed, refaced and remade, with sound, toys, silliness and skins.</p>
+    <p class="note">They are listed here only. No fake playable button for them exists in this package.</p>
+  </section>
+</main>
+<nav class="bottom">
+  <a href="index.html">🏠 Dashboard</a>
+  <a href="compass.html">🧭 Compass</a>
+  <a href="control.html">🎛️ Control</a>
+  <a href="sitemap.html">🗺️ Site Map</a>
+  <a href="games.html" class="here">🎮 Games</a>
+  <a href="map.html">🌍 Map</a>
+</nav>
+<script>
+(function () {
+  "use strict";
+  var board = Array(9).fill(""), turn = "X", over = false;
+  var el = document.getElementById("ttt"), msg = document.getElementById("tttmsg");
+  function winCheck() {
+    var lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for (var i = 0; i < lines.length; i++) {
+      var a = lines[i];
+      if (board[a[0]] && board[a[0]] === board[a[1]] && board[a[0]] === board[a[2]]) return board[a[0]];
+    }
+    return board.indexOf("") === -1 ? "draw" : null;
+  }
+  function render() {
+    el.innerHTML = "";
+    board.forEach(function (v, i) {
+      var b = document.createElement("button");
+      b.textContent = v || "·";
+      b.onclick = function () {
+        if (over || board[i]) return;
+        board[i] = turn; b.textContent = turn; MH.beep(659);
+        var w = winCheck();
+        if (w === "draw") { msg.textContent = "Draw — no deal closed. Tap New game."; over = true; }
+        else if (w) { msg.textContent = w + " wins — three in a row closes the deal."; over = true; MH.haptic("ok"); }
+        else { turn = turn === "X" ? "O" : "X"; msg.textContent = turn + " to play — trade, barter, commerce, together."; }
+      };
+      el.appendChild(b);
+    });
+  }
+  window.resetTTT = function () { board = Array(9).fill(""); turn = "X"; over = false; msg.textContent = "Your turn — X, then O. Tap a square."; render(); };
+  render();
+
+  var seq = [], user = [], playing = false;
+  var smsg = document.getElementById("simonmsg");
+  var colours = ["🔴", "🟢", "🔵", "🟡"];
+  window.startSimon = function () {
+    seq = [colours[Math.floor(Math.random() * 4)]]; user = []; playing = true;
+    smsg.textContent = "Simon says: " + seq.join(" ") + " — repeat it.";
+    MH.beep(784);
+  };
+  window.simonTap = function (c) {
+    if (!playing) { smsg.textContent = "Press Start Simon first."; return; }
+    user.push(c); MH.beep(659);
+    if (user[user.length - 1] !== seq[user.length - 1]) {
+      smsg.textContent = "Not that one — Simon resets. Press Start Simon to try again.";
+      playing = false; seq = []; user = []; MH.haptic("bad"); return;
+    }
+    if (user.length === seq.length) {
+      seq.push(colours[Math.floor(Math.random() * 4)]); user = [];
+      smsg.textContent = "Right. Simon adds one. Simon says: " + seq.join(" ");
+      MH.haptic("ok");
+    } else {
+      smsg.textContent = "So far, so good — keep going.";
+    }
+  };
+})();
+</script>
+</body>
+</html>

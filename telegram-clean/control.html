@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MADHOUSE — Control Panel</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="app.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1><span class="mad">MADHOUSE</span> — Control Panel</h1>
+  <p>Controls that actually work, on this page. Nothing here pretends to change a server.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>🎨 Skin Changer</h2>
+    <p>Current skin: <strong><span id="skinName">Vibrant Welcome</span></strong></p>
+    <select id="skinSelect" style="font-size:19px;padding:.6rem;width:100%"></select>
+    <p class="note">Skins change the colours of this site only. They are saved on this device only.</p>
+  </section>
+
+  <section class="card">
+    <h2>🌍 World Changer</h2>
+    <p>Current world: <strong><span id="worldName">not chosen yet</span></strong></p>
+    <select id="worldSelect" style="font-size:19px;padding:.6rem;width:100%"></select>
+    <p class="note">Worlds here are names and banners, not full built worlds. A full world build is a separate step, and is not claimed here.</p>
+  </section>
+
+  <section class="card">
+    <h2>🔊 Sound and text</h2>
+    <div class="row">
+      <button id="soundToggle">🔊 Sound: on</button>
+      <button id="sizeToggle">🔎 Text: normal — tap for large</button>
+    </div>
+    <p class="note">Sound here is a short WebAudio beep, not music files and not a voice recording. Real music tracks and a recorded voice-over are not wired in yet, and are not claimed.</p>
+  </section>
+
+  <section class="card">
+    <h2>🛡️ Safety, plainly</h2>
+    <p>No phone number, no biometrics, no government registration to use this Dashboard.</p>
+    <p>No money in or out, no debt, no promise, no price, in this clean front-end.</p>
+    <p>Parental permission openly for the young door. No live Dots, goods or merchants for minors before legal and youth-safety review.</p>
+    <p>Nobody is tracked on this site. The Map uses sample city nodes only, and does not use GPS.</p>
+  </section>
+
+  <section class="card">
+    <h2>🤖 Generosity AI</h2>
+    <p>Generosity, the clan AI, is not running inside this clean front-end. There is no AI chat button here that pretends to answer.</p>
+    <p class="note">When an AI host is connected, add one clearly labelled AI button here, and say which host answers. Do not add it silently.</p>
+  </section>
+</main>
+<nav class="bottom">
+  <a href="index.html">🏠 Dashboard</a>
+  <a href="compass.html">🧭 Compass</a>
+  <a href="control.html" class="here">🎛️ Control</a>
+  <a href="sitemap.html">🗺️ Site Map</a>
+  <a href="games.html">🎮 Games</a>
+  <a href="map.html">🌍 Map</a>
+</nav>
+</body>
+</html>

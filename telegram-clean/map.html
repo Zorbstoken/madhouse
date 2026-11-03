@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MADHOUSE — Living Nodes Map</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="app.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1><span class="mad">MADHOUSE</span> — Living Nodes Map</h1>
+  <p>Moving globe, like cerebral — nodes connected like a mind. City-level only, not tracked.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>🌍 Moving Globe — sample nodes</h2>
+    <p class="warn"><strong>These nodes are samples, not real people.</strong> They show the pattern: Friend, Party, Participant, Contribution, Event, by city. No GPS is used. Nobody's real position is shown here.</p>
+    <input id="search" type="text" placeholder="Search cities..." oninput="filterCities(this.value)">
+    <div class="row">
+      <button onclick="zoomMap(1.2)">＋ Zoom in</button>
+      <button onclick="zoomMap(0.83)">－ Zoom out</button>
+      <button onclick="toggleRotate()">⏸ / ▶ Rotate</button>
+    </div>
+    <canvas id="globe" width="360" height="360"></canvas>
+    <div class="legend">
+      <span style="background:#f5c518;color:#111">🟡 Friend</span>
+      <span style="background:#ec4899;color:#fff">🩷 Party</span>
+      <span style="background:#22c55e;color:#fff">🟢 Participant</span>
+      <span style="background:#38bdf8;color:#111">🔵 Contribution</span>
+      <span style="background:#a855f7;color:#fff">🟣 Event</span>
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <section class="card">
+    <h2>🧭 Living Nodes — participants, not tracked</h2>
+    <p>You choose to participate. You are not tracked. You meet up because you want to meet up, as part of the movement of change.</p>
+    <p class="note">World of Streams pattern, adapted, no tokenomics: map-is-app, Watcher / Participant and Streamer / Contributor interchangeable, Info Pin, Request Pin, DocStream, Globe Skin, GPS on / off (off by default here — no GPS is read at all), city-level only. NOT taken: any token, supply, price, metered pay, earnings, payouts, wallet, or prepaid watch time.</p>
+    <p class="note">The old engine sky map (/webapp/map.html) is NOT in this package. It needs the engine host. When a host is connected, add it as a second, clearly labelled live map. Do not replace this sample globe silently.</p>
+  </section>
+</main>
+<nav class="bottom">
+  <a href="index.html">🏠 Dashboard</a>
+  <a href="compass.html">🧭 Compass</a>
+  <a href="control.html">🎛️ Control</a>
+  <a href="sitemap.html">🗺️ Site Map</a>
+  <a href="games.html">🎮 Games</a>
+  <a href="map.html" class="here">🌍 Map</a>
+</nav>
+<script>
+(function () {
+  "use strict";
+  var nodes = [
+    {name: "Kaş, Türkiye", lat: 36.2, lon: 29.64, type: "Friend", color: "#f5c518"},
+    {name: "Istanbul, Türkiye", lat: 41.0, lon: 28.98, type: "Participant", color: "#22c55e"},
+    {name: "London, UK", lat: 51.5, lon: -0.12, type: "Party", color: "#ec4899"},
+    {name: "Paris, France", lat: 48.85, lon: 2.35, type: "Event", color: "#a855f7"},
+    {name: "Berlin, Germany", lat: 52.52, lon: 13.4, type: "Contribution", color: "#38bdf8"},
+    {name: "Toronto, Canada", lat: 43.65, lon: -79.38, type: "Friend", color: "#f5c518"},
+    {name: "New York, USA", lat: 40.71, lon: -74.0, type: "Participant", color: "#22c55e"},
+    {name: "Tokyo, Japan", lat: 35.68, lon: 139.69, type: "Event", color: "#a855f7"}
+  ];
+  var rot = 0, rotSpeed = 0.2, zoom = 1, filter = "";
+  window.filterCities = function (v) { filter = v.toLowerCase(); renderList(); };
+  window.zoomMap = function (f) { zoom = Math.max(0.6, Math.min(2.2, zoom * f)); };
+  window.toggleRotate = function () { rotSpeed = rotSpeed ? 0 : 0.2; };
+  function renderList() {
+    document.getElementById("list").innerHTML = nodes.filter(function (n) {
+      return n.name.toLowerCase().includes(filter);
+    }).map(function (n) {
+      return "<div>" + n.type + ": " + n.name + " — SAMPLE node, city-level, choose to participate, not tracked</div>";
+    }).join("");
+  }
+  var c = document.getElementById("globe"), ctx = c.getContext("2d");
+  function draw() {
+    rot += rotSpeed; ctx.clearRect(0, 0, 360, 360);
+    var cx = 180, cy = 180, R = 160 * zoom;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fillStyle = "#1e6aa8"; ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,.2)";
+    for (var i = -60; i <= 60; i += 30) {
+      ctx.beginPath(); ctx.ellipse(cx, cy, R, R * Math.cos(i * Math.PI / 180), 0, 0, Math.PI * 2); ctx.stroke();
+    }
+    nodes.forEach(function (n) {
+      var lon = n.lon + rot * 10;
+      var phi = n.lat * Math.PI / 180, lam = lon * Math.PI / 180;
+      var x = cx + R * Math.cos(phi) * Math.sin(lam), y = cy - R * Math.sin(phi);
+      var visible = Math.cos(phi) * Math.cos(lam) > 0;
+      if (visible && n.name.toLowerCase().includes(filter)) {
+        ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI * 2); ctx.fillStyle = n.color; ctx.fill();
+        ctx.fillStyle = "#fff"; ctx.font = "12px sans-serif"; ctx.fillText(n.name, x + 12, y);
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  renderList(); draw();
+})();
+</script>
+</body>
+</html>

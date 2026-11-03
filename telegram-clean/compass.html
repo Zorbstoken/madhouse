@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MADHOUSE — Compass</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="app.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1><span class="mad">MADHOUSE</span> — Compass</h1>
+  <p>Where you are, and where to go next, in order. No guessing.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>🧭 The journey, in order</h2>
+    <p>Welcome → Play → Pictures → Story → Three Questions → Town Hall → Why Not You → Map → Pinboard → Prep → Ready → Meet / Make / Help / Play / Explore</p>
+    <div class="grid">
+      <a class="tile" href="index.html">🏠<span>1. Welcome</span><em>Dashboard, this is home</em></a>
+      <a class="tile" href="games.html">🎮<span>2. Play</span><em>Games first</em></a>
+      <a class="tile" href="control.html">🖼️<span>3. Pictures</span><em>Skins and worlds</em></a>
+      <button class="tile" onclick="MH.showAnswer('compassAnswer','<strong>4. Story — why this place exists.</strong> A meeting engine, not just a game. Dots are the excuse. People meeting, swapping, helping and being matched, with generosity, kindness and gratuity as the test.')">📖<span>4. Story</span><em>Tap to read it here</em></button>
+      <a class="tile" href="townhall.html">💛<span>5. Three Questions</span><em>Town Hall</em></a>
+      <a class="tile" href="townhall.html">🏛️<span>6. Town Hall</span><em>Meet, talk, connect</em></a>
+      <button class="tile" onclick="MH.showAnswer('compassAnswer','<strong>7. Why not you?</strong> Not someone else. Not later. You. If you want to participate, contribute, or be extended to, start here, in Town Hall, with one tap.')">❓<span>7. Why Not You</span><em>Tap to read it here</em></button>
+      <a class="tile" href="map.html">🌍<span>8. Map</span><em>Living Nodes Map</em></a>
+      <button class="tile" onclick="MH.showAnswer('compassAnswer','<strong>9. Pinboard — not built yet, honestly.</strong> A place to save pictures, notes and ideas to your own board is planned, but it is not a working page in this package. No button here pretends otherwise.')">📌<span>9. Pinboard</span><em>Planned, not built yet</em></button>
+      <button class="tile" onclick="MH.showAnswer('compassAnswer','<strong>10. Prep — start here.</strong> You need nothing to open this Dashboard. No phone number, no biometrics, no government registration, no money, no price, no promise, no debt. Parental permission is asked openly for the young door, before any live Dots, goods or merchants for minors.')">🎒<span>10. Prep</span><em>Tap to read it here</em></button>
+      <a class="tile" href="townhall.html">✅<span>11. Ready</span><em>Town Hall actions</em></a>
+      <a class="tile" href="townhall.html">🤝<span>12. Meet / Make / Help / Play / Explore</span><em>Five actions, Town Hall</em></a>
+    </div>
+    <div id="compassAnswer" class="answer" style="display:none"></div>
+  </section>
+
+  <section class="card">
+    <h2>💱 Currents — in plain words</h2>
+    <p>Money as energy, moving as a current. Currencies as currents, flowing pocket to pocket, node to node, freeport to freeport — not locked, not gated, moving.</p>
+    <p class="note">Currents named here, from the draft: Choice, Joy, Activity, Participation, Kindness, Love, Unconditional Love, Wellness, Health, Happiness, Free Spirit, Nodes, Currents, Cosmic Currents, Entity Currents, Ethereal Currents, Aether Currents, Hidden Unseen Worlds Currents, Unformed and Unseen Potential, Unformed Potential Realized Currents.</p>
+    <p class="note">Kindness Currents starter: Joy, Satisfaction, Purpose, Generosity, Compassion, Kindness to strangers, friends, family, animals and self, Graciousness, Gratuity, Giving, Sharing, Helping, Listening, Welcoming, Encouraging, Forgiving, Patience, Gentleness, Warmth, Hospitality, Care, Tenderness, Support, Uplifting, Celebrating others, Thankfulness, Goodwill. The full hundreds list is not invented here.</p>
+  </section>
+
+  <section class="card">
+    <h2>⚓ Free Ports — Consul, in plain words</h2>
+    <p>We in essence become the free ports. Each individual, as a sovereign, IS a freeport node. Nodes are sovereign individuals, doors where the caravan meets. Free ports are open, no gate, no toll, no club.</p>
+    <p class="note">Young Free Ports: Generation Alpha, tweens, teens, young adults and Generation Z are the living Seek Sanctuary / Be Sanctuary nodes. Same welcome, same open doors.</p>
+  </section>
+</main>
+<nav class="bottom">
+  <a href="index.html">🏠 Dashboard</a>
+  <a href="compass.html" class="here">🧭 Compass</a>
+  <a href="control.html">🎛️ Control</a>
+  <a href="sitemap.html">🗺️ Site Map</a>
+  <a href="games.html">🎮 Games</a>
+  <a href="map.html">🌍 Map</a>
+</nav>
+</body>
+</html>
